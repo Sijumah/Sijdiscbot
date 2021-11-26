@@ -30,6 +30,11 @@
 
 namespace dpp {
 
+/**
+ * @brief A returned event handle for an event which was attached
+ */
+typedef size_t event_handle;
+
 /* Forward declaration */
 struct confirmation_callback_t;
 
@@ -57,7 +62,7 @@ struct DPP_EXPORT event_dispatch_t {
 	 * Note that for some events, notably voice events, this may be nullptr.
 	 */
 	class discord_client* from; 
-	
+
 	/**
 	 * @brief Construct a new event_dispatch_t object
 	 * 
@@ -83,23 +88,6 @@ struct DPP_EXPORT event_dispatch_t {
 	bool is_cancelled() const;
 };
 
-/**
- * @brief Call all listeners for an event handler.
- * 
- * @tparam V a `std::vector` of `std::function`, where each `std::function` takes a single parameter derived from dpp::event_dispatch_t
- * @tparam E an object derived from dpp::event_dispatch_t to pass as the single parameter to the event listener functions
- * @param vec vector of listeners attached to an event handler
- * @param event event object to pass as a parameter to the event handler
- */
-template< class V, class E > void call_event(const V& vec, const E& event) {
-	std::for_each(vec.begin(), vec.end(), [&](auto &ev) {
-		if (!event.is_cancelled()) {
-			ev(event);
-		}
-	});
-};
-
-
 /** @brief Log messages */
 struct DPP_EXPORT log_t : public event_dispatch_t {
 	/** Constructor
@@ -112,7 +100,105 @@ struct DPP_EXPORT log_t : public event_dispatch_t {
 	loglevel severity;
 	/** Log Message */
 	std::string message;
+
+	log_t(const log_t&) = default; 	
 };
+
+/** @brief Add user to scheduled event */
+struct DPP_EXPORT guild_scheduled_event_user_add_t : public event_dispatch_t {
+	/** Constructor
+	 * @param client The shard the event originated on. CAN BE NULL
+	 * for log events originating from the cluster object
+	 * @param raw Raw event text as JSON
+	 */
+	guild_scheduled_event_user_add_t(class discord_client* client, const std::string& raw);
+	/**
+	 * @brief event user added to
+	 */
+	snowflake event_id;
+
+	/**
+	 * @brief User being added
+	 * 
+	 */
+	snowflake user_id;
+
+	/**
+	 * @brief Guild being added to
+	 * 
+	 */
+	snowflake guild_id;
+};
+
+/** @brief Delete user from scheduled event */
+struct DPP_EXPORT guild_scheduled_event_user_remove_t : public event_dispatch_t {
+	/** Constructor
+	 * @param client The shard the event originated on. CAN BE NULL
+	 * for log events originating from the cluster object
+	 * @param raw Raw event text as JSON
+	 */
+	guild_scheduled_event_user_remove_t(class discord_client* client, const std::string& raw);
+	/**
+	 * @brief event user removed from
+	 */
+	snowflake event_id;
+
+	/**
+	 * @brief User being removed
+	 * 
+	 */
+	snowflake user_id;
+
+	/**
+	 * @brief Guild being removed from
+	 * 
+	 */
+	snowflake guild_id;
+};
+
+/** @brief Create scheduled event */
+struct DPP_EXPORT guild_scheduled_event_create_t : public event_dispatch_t {
+	/** Constructor
+	 * @param client The shard the event originated on. CAN BE NULL
+	 * for log events originating from the cluster object
+	 * @param raw Raw event text as JSON
+	 */
+	guild_scheduled_event_create_t(class discord_client* client, const std::string& raw);
+	/**
+	 * @brief created event
+	 */
+	scheduled_event created;
+};
+
+/** @brief Create scheduled event */
+struct DPP_EXPORT guild_scheduled_event_update_t : public event_dispatch_t {
+	/** Constructor
+	 * @param client The shard the event originated on. CAN BE NULL
+	 * for log events originating from the cluster object
+	 * @param raw Raw event text as JSON
+	 */
+	guild_scheduled_event_update_t(class discord_client* client, const std::string& raw);
+	/**
+	 * @brief updated event
+	 */
+	scheduled_event updated;
+};
+
+/** @brief Delete scheduled event */
+struct DPP_EXPORT guild_scheduled_event_delete_t : public event_dispatch_t {
+	/** Constructor
+	 * @param client The shard the event originated on. CAN BE NULL
+	 * for log events originating from the cluster object
+	 * @param raw Raw event text as JSON
+	 */
+	guild_scheduled_event_delete_t(class discord_client* client, const std::string& raw);
+	/**
+	 * @brief deleted event
+	 */
+	scheduled_event deleted;
+};
+
+
 
 /** @brief Create stage instance */
 struct DPP_EXPORT stage_instance_create_t : public event_dispatch_t {
@@ -184,7 +270,7 @@ struct DPP_EXPORT interaction_create_t : public event_dispatch_t {
 	 * @param t Type of reply to send
 	 * @param m Message object to send. Not all fields are supported by Discord.
 	 * @param callback User function to execute when the api call completes.
-	 * On success the callback will contain a dpp::message object in confirmation_callback_t::value. On failure, the value is undefined and confirmation_callback_t::is_error() method will return true. You can obtain full error details with confirmation_callback_t::get_error().
+	 * On success the callback will contain a dpp::confirmation object in confirmation_callback_t::value. On failure, the value is undefined and confirmation_callback_t::is_error() method will return true. You can obtain full error details with confirmation_callback_t::get_error().
 	 */
 	void reply(interaction_response_type t, const message & m, command_completion_event_t callback = {}) const;
 
@@ -194,7 +280,7 @@ struct DPP_EXPORT interaction_create_t : public event_dispatch_t {
 	 * @param t Type of reply to send
 	 * @param mt The string value to send, for simple text only messages
 	 * @param callback User function to execute when the api call completes.
-	 * On success the callback will contain a dpp::message object in confirmation_callback_t::value. On failure, the value is undefined and confirmation_callback_t::is_error() method will return true. You can obtain full error details with confirmation_callback_t::get_error().
+	 * On success the callback will contain a dpp::confirmation object in confirmation_callback_t::value. On failure, the value is undefined and confirmation_callback_t::is_error() method will return true. You can obtain full error details with confirmation_callback_t::get_error().
 	 */
 	void reply(interaction_response_type t, const std::string & mt, command_completion_event_t callback = {}) const;
 
@@ -211,7 +297,7 @@ struct DPP_EXPORT interaction_create_t : public event_dispatch_t {
 	 *
 	 * @param m Message object to send. Not all fields are supported by Discord.
 	 * @param callback User function to execute when the api call completes.
-	 * On success the callback will contain a dpp::message object in confirmation_callback_t::value. On failure, the value is undefined and confirmation_callback_t::is_error() method will return true. You can obtain full error details with confirmation_callback_t::get_error().
+	 * On success the callback will contain a dpp::confirmation object in confirmation_callback_t::value. On failure, the value is undefined and confirmation_callback_t::is_error() method will return true. You can obtain full error details with confirmation_callback_t::get_error().
 	 */
 	void edit_response(const message & m, command_completion_event_t callback = {}) const;
 
@@ -220,7 +306,7 @@ struct DPP_EXPORT interaction_create_t : public event_dispatch_t {
 	 *
 	 * @param mt The string value to send, for simple text only messages
 	 * @param callback User function to execute when the api call completes.
-	 * On success the callback will contain a dpp::message object in confirmation_callback_t::value. On failure, the value is undefined and confirmation_callback_t::is_error() method will return true. You can obtain full error details with confirmation_callback_t::get_error().
+	 * On success the callback will contain a dpp::confirmation object in confirmation_callback_t::value. On failure, the value is undefined and confirmation_callback_t::is_error() method will return true. You can obtain full error details with confirmation_callback_t::get_error().
 	 */
 	void edit_response(const std::string & mt, command_completion_event_t callback = {}) const;
 
@@ -228,7 +314,7 @@ struct DPP_EXPORT interaction_create_t : public event_dispatch_t {
 	 * @brief Delete the original response for this interaction
 	 *
 	 * @param callback User function to execute when the api call completes.
-	 * On success the callback will contain a dpp::message object in confirmation_callback_t::value. On failure, the value is undefined and confirmation_callback_t::is_error() method will return true. You can obtain full error details with confirmation_callback_t::get_error().
+	 * On success the callback will contain a dpp::confirmation object in confirmation_callback_t::value. On failure, the value is undefined and confirmation_callback_t::is_error() method will return true. You can obtain full error details with confirmation_callback_t::get_error().
 	 */
 	void delete_original_response(command_completion_event_t callback = {});
 
@@ -236,7 +322,7 @@ struct DPP_EXPORT interaction_create_t : public event_dispatch_t {
 	 * @brief Set the bot to 'thinking' state
 	 *
 	 * @param callback User function to execute when the api call completes.
-	 * On success the callback will contain a dpp::message object in confirmation_callback_t::value. On failure, the value is undefined and confirmation_callback_t::is_error() method will return true. You can obtain full error details with confirmation_callback_t::get_error().
+	 * On success the callback will contain a dpp::confirmation object in confirmation_callback_t::value. On failure, the value is undefined and confirmation_callback_t::is_error() method will return true. You can obtain full error details with confirmation_callback_t::get_error().
 	 */
 	void thinking(command_completion_event_t callback = {}) const;
 
@@ -667,6 +753,29 @@ struct DPP_EXPORT guild_create_t : public event_dispatch_t {
 	 * @brief guild that was created
 	 */
 	guild* created;
+	/**
+	 * @brief List of presences of all users on the guild.
+	 * 
+	 * This is only filled if you have the GUILD_PRESENCES
+	 * privileged intent.
+	 */
+	presence_map presences;
+	/**
+	 * @brief List of scheduled events in the guild
+	 */
+	scheduled_event_map scheduled_events;
+	/**
+	 * @brief List of stage instances in the guild
+	 */
+	stage_instance_map stage_instances;
+	/**
+	 * @brief List of threads in the guild
+	 */
+	thread_map threads;
+	/**
+	 * @brief List of stickers in the guild
+	 */
+	sticker_map stickers;
 };
 
 /** @brief Create channel */
@@ -1018,9 +1127,53 @@ struct DPP_EXPORT message_create_t : public event_dispatch_t {
 	message_create_t(class discord_client* client, const std::string& raw);
 	/**
 	 * @brief message that was created (sent).
-	 * If you use any parts of this in another thread, take a copy! It doesn't stick around!
 	 */
-	message* msg;
+	message msg;
+	/**
+	 * @brief Send a text to the same channel as the channel_id in recieved event.
+	 * @param m Text to send
+	 * @param callback User function to execute once the API call completes.
+	 * @note confirmation_callback_t::value contains a message object on success. On failure, value is undefined and confirmation_callback_t::is_error() is true.
+	 */
+	void send(const std::string& m, command_completion_event_t callback = {}) const;
+	/**
+	 * @brief Send a message to the same channel as the channel_id in recieved event.
+	 * @param msg Message to send
+	 * @param callback User function to execute once the API call completes.
+	 * @note confirmation_callback_t::value contains a message object on success. On failure, value is undefined and confirmation_callback_t::is_error() is true.
+	 */
+	void send(message& msg, command_completion_event_t callback = {}) const;
+	/**
+	 * @brief Send a message to the same channel as the channel_id in recieved event.
+	 * @param msg Message to send
+	 * @param callback User function to execute once the API call completes.
+	 * @note confirmation_callback_t::value contains a message object on success. On failure, value is undefined and confirmation_callback_t::is_error() is true.
+	 */
+	void send(message&& msg, command_completion_event_t callback = {}) const;
+	/**
+	 * @brief Reply to the message recieved in the event.
+	 * @param m Text to send
+	 * @param mention_replied_user mentions (pings) the author of message replied to, if true
+	 * @param callback User function to execute once the API call completes.
+	 * @note confirmation_callback_t::value contains a message object on success. On failure, value is undefined and confirmation_callback_t::is_error() is true.
+	 */
+	void reply(const std::string& m, bool mention_replied_user = false, command_completion_event_t callback = {}) const;
+	/**
+	 * @brief Reply to the message recieved in the event.
+	 * @param msg Message to send as a reply.
+	 * @param mention_replied_user mentions (pings) the author of message replied to, if true
+	 * @param callback User function to execute once the API call completes.
+	 * @note confirmation_callback_t::value contains a message object on success. On failure, value is undefined and confirmation_callback_t::is_error() is true.
+	 */
+	void reply(message& msg, bool mention_replied_user = false, command_completion_event_t callback = {}) const;
+	/**
+	 * @brief Reply to the message recieved in the event.
+	 * @param msg Message to send as a reply.
+	 * @param mention_replied_user mentions (pings) the author of message replied to, if true
+	 * @param callback User function to execute once the API call completes.
+	 * @note confirmation_callback_t::value contains a message object on success. On failure, value is undefined and confirmation_callback_t::is_error() is true.
+	 */
+	void reply(message&& msg, bool mention_replied_user = false, command_completion_event_t callback = {}) const;
 };
 
 /** @brief Guild ban add */
@@ -1350,361 +1503,6 @@ struct DPP_EXPORT voice_client_disconnect_t : public event_dispatch_t {
 	 * @brief user id of user who left vc
 	 */
 	snowflake user_id;
-};
-
-/** @brief The dispatcher class contains a set of std::functions representing hooked events
- * that the user code is interested in. These are modified via the on_eventname style
- * methods in the cluster class.
- */
-class DPP_EXPORT dispatcher {
-public:
-	/** @brief Event handler function pointer for log event
-	 * @param event Event parameters
-	 */
-	std::vector<std::function<void(const log_t& event)>> log;
-	/** @brief Event handler function pointer for voice state update event
-	 * @param event Event parameters
-	 */
-	std::vector<std::function<void(const voice_state_update_t& event)>> voice_state_update;
-	/** @brief Event handler function pointer for voice client speaking event
-	 * @param event Event parameters
-	 */
-	std::vector<std::function<void(const voice_client_speaking_t& event)>> voice_client_speaking;
-	/** @brief Event handler function pointer for voice client disconnect event
-	 * @param event Event parameters
-	 */
-	std::vector<std::function<void(const voice_client_disconnect_t& event)>> voice_client_disconnect;
-	/** @brief Event handler function pointer for interaction create event
-	 * @param event Event parameters
-	 */
-	std::vector<std::function<void(const interaction_create_t& event)>> interaction_create;
-	/** @brief Event handler function pointer for button click event
-	 * @param event Event parameters
-	 */
-	std::vector<std::function<void(const button_click_t& event)>> button_click;
-	/** @brief Event handler function pointer for autocomplete event
-	 * @param event Event parameters
-	 */
-	std::vector<std::function<void(const autocomplete_t& event)>> autocomplete;
-	/** @brief Event handler function pointer for button click event
-	 * @param event Event parameters
-	 */
-	std::vector<std::function<void(const select_click_t& event)>> select_click;
-	/** @brief Event handler function pointer for guild delete event
-	 * @param event Event parameters
-	 */
-	std::vector<std::function<void(const guild_delete_t& event)>> guild_delete;
-	/** @brief Event handler function pointer for channel delete event
-	 * @param event Event parameters
-	 */
-	std::vector<std::function<void(const channel_delete_t& event)>> channel_delete;
-	/** @brief Event handler function pointer for channel update event
-	 * @param event Event parameters
-	 */
-	std::vector<std::function<void(const channel_update_t& event)>> channel_update;
-	/** @brief Event handler function pointer for ready event
-	 * @param event Event parameters
-	 */
-	std::vector<std::function<void(const ready_t& event)>> ready;
-	/** @brief Event handler function pointer for message delete event
-	 * @param event Event parameters
-	 */
-	std::vector<std::function<void(const message_delete_t& event)>> message_delete;
-	/** @brief Event handler function pointer for application command delete event
-	 * @param event Event parameters
-	 */
-	std::vector<std::function<void(const application_command_delete_t& event)>> application_command_delete;
-	/** @brief Event handler function pointer for guild member remove event
-	 * @param event Event parameters
-	 */
-	std::vector<std::function<void(const guild_member_remove_t& event)>> guild_member_remove;
-	/** @brief Event handler function pointer for guild member remove event
-	 * @param event Event parameters
-	 */
-	std::vector<std::function<void(const application_command_create_t& event)>> application_command_create;
-	/** @brief Event handler function pointer for resumed event
-	 * @param event Event parameters
-	 */
-	std::vector<std::function<void(const resumed_t& event)>> resumed;
-	/** @brief Event handler function pointer for guild role create event
-	 * @param event Event parameters
-	 */
-	std::vector<std::function<void(const guild_role_create_t& event)>> guild_role_create;
-	/** @brief Event handler function pointer for typing start event
-	 * @param event Event parameters
-	 */
-	std::vector<std::function<void(const typing_start_t& event)>> typing_start;
-	/** @brief Event handler function pointer for message reaction add event
-	 * @param event Event parameters
-	 */
-	std::vector<std::function<void(const message_reaction_add_t& event)>> message_reaction_add;
-	/** @brief Event handler function pointer for guild members chunk event
-	 * @param event Event parameters
-	 */
-	std::vector<std::function<void(const guild_members_chunk_t& event)>> guild_members_chunk;
-	/** @brief Event handler function pointer for message reaction remove event
-	 * @param event Event parameters
-	 */
-	std::vector<std::function<void(const message_reaction_remove_t& event)>> message_reaction_remove;
-	/** @brief Event handler function pointer for guild create event
-	 * @param event Event parameters
-	 */
-	std::vector<std::function<void(const guild_create_t& event)>> guild_create;
-	/** @brief Event handler function pointer for guild channel create event
-	 * @param event Event parameters
-	 */
-	std::vector<std::function<void(const channel_create_t& event)>> channel_create;
-	/** @brief Event handler function pointer for message reaction remove emoji event
-	 * @param event Event parameters
-	 */
-	std::vector<std::function<void(const message_reaction_remove_emoji_t& event)>> message_reaction_remove_emoji;
-	/** @brief Event handler function pointer for message delete bulk event
-	 * @param event Event parameters
-	 */
-	std::vector<std::function<void(const message_delete_bulk_t& event)>> message_delete_bulk;
-	/** @brief Event handler function pointer for guild role update event
-	 * @param event Event parameters
-	 */
-	std::vector<std::function<void(const guild_role_update_t& event)>> guild_role_update;
-	/** @brief Event handler function pointer for guild role delete event
-	 * @param event Event parameters
-	 */
-	std::vector<std::function<void(const guild_role_delete_t& event)>> guild_role_delete;
-	/** @brief Event handler function pointer for channel pins update event
-	 * @param event Event parameters
-	 */
-	std::vector<std::function<void(const channel_pins_update_t& event)>> channel_pins_update;
-	/** @brief Event handler function pointer for message reaction remove all event
-	 * @param event Event parameters
-	 */
-	std::vector<std::function<void(const message_reaction_remove_all_t& event)>> message_reaction_remove_all;
-	/** @brief Event handler function pointer for voice server update event
-	 * @param event Event parameters
-	 */
-	std::vector<std::function<void(const voice_server_update_t& event)>> voice_server_update;
-	/** @brief Event handler function pointer for guild emojis update event
-	 * @param event Event parameters
-	 */
-	std::vector<std::function<void(const guild_emojis_update_t& event)>> guild_emojis_update;
-	/** @brief Event handler function pointer for presence update event
-	 * @param event Event parameters
-	 */
-	std::vector<std::function<void(const presence_update_t& event)>> presence_update;
-	/** @brief Event handler function pointer for webhooks update event
-	 * @param event Event parameters
-	 */
-	std::vector<std::function<void(const webhooks_update_t& event)>> webhooks_update;
-	/** @brief Event handler function pointer for guild member add event
-	 * @param event Event parameters
-	 */
-	std::vector<std::function<void(const guild_member_add_t& event)>> guild_member_add;
-	/** @brief Event handler function pointer for invite delete event
-	 * @param event Event parameters
-	 */
-	std::vector<std::function<void(const invite_delete_t& event)>> invite_delete;
-	/** @brief Event handler function pointer for guild update event
-	 * @param event Event parameters
-	 */
-	std::vector<std::function<void(const guild_update_t& event)>> guild_update;
-	/** @brief Event handler function pointer for guild integrations update event
-	 * @param event Event parameters
-	 */
-	std::vector<std::function<void(const guild_integrations_update_t& event)>> guild_integrations_update;
-	/** @brief Event handler function pointer for guild member update event
-	 * @param event Event parameters
-	 */
-	std::vector<std::function<void(const guild_member_update_t& event)>> guild_member_update;
-	/** @brief Event handler function pointer for application command update event
-	 * @param event Event parameters
-	 */
-	std::vector<std::function<void(const application_command_update_t& event)>> application_command_update;
-	/** @brief Event handler function pointer for invite create event
-	 * @param event Event parameters
-	 */
-	std::vector<std::function<void(const invite_create_t& event)>> invite_create;
-	/** @brief Event handler function pointer for message update event
-	 * @param event Event parameters
-	 */
-	std::vector<std::function<void(const message_update_t& event)>> message_update;
-	/** @brief Event handler function pointer for user update event
-	 * @param event Event parameters
-	 */
-	std::vector<std::function<void(const user_update_t& event)>> user_update;
-	/** @brief Event handler function pointer for message create event
-	 * @param event Event parameters
-	 */
-	std::vector<std::function<void(const message_create_t& event)>> message_create;
-	/** @brief Event handler function pointer for guild ban add event
-	 * @param event Event parameters
-	 */
-	std::vector<std::function<void(const guild_ban_add_t& event)>> guild_ban_add;
-	/** @brief Event handler function pointer for guild ban remove event
-	 * @param event Event parameters
-	 */
-	std::vector<std::function<void(const guild_ban_remove_t& event)>> guild_ban_remove;
-	/** @brief Event handler function pointer for integration create event
-	 * @param event Event parameters
-	 */
-	std::vector<std::function<void(const integration_create_t& event)>> integration_create;
-	/** @brief Event handler function pointer for integration update event
-	 * @param event Event parameters
-	 */
-	std::vector<std::function<void(const integration_update_t& event)>> integration_update;
-	/** @brief Event handler function pointer for integration delete event
-	 * @param event Event parameters
-	 */
-	std::vector<std::function<void(const integration_delete_t& event)>> integration_delete;	
-	/** @brief Event handler function pointer for thread create event 
-	 * @param event Event parameters
-	 */
-	std::vector<std::function<void(const thread_create_t& event)>> thread_create;
-	/** @brief Event handler function pointer for thread update event 
-	 * @param event Event parameters
-	 */
-	std::vector<std::function<void(const thread_update_t& event)>> thread_update;
-	/** @brief Event handler function pointer for thread delete event 
-	 * @param event Event parameters
-	 */
-	std::vector<std::function<void(const thread_delete_t& event)>> thread_delete;
-	/** @brief Event handler function pointer for thread list sync event
-	 * @param event Event parameters
-	 */
-	std::vector<std::function<void(const thread_list_sync_t& event)>> thread_list_sync;
-	/** @brief Event handler function pointer for thread member update event
-	 * @param event Event parameters
-	 */
-	std::vector<std::function<void(const thread_member_update_t& event)>> thread_member_update;
-	/** @brief Event handler function pointer for thread members update event
-	 * @param event Event parameters
-	 */
-	std::vector<std::function<void(const thread_members_update_t& event)>> thread_members_update;
-	/** @brief Event handler function pointer for voice buffer send event
-	 * @param event Event parameters
-	 */
-	std::vector<std::function<void(const voice_buffer_send_t& event)>> voice_buffer_send;
-	/** @brief Event handler function pointer for voice user talking event
-	 * @param event Event parameters
-	 */
-	std::vector<std::function<void(const voice_user_talking_t& event)>> voice_user_talking;
-	/** @brief Event handler function pointer for voice ready event
-	 * @param event Event parameters
-	 */
-	std::vector<std::function<void(const voice_ready_t& event)>> voice_ready;
-	/** @brief Event handler function pointer for voice receive event
-	 * @param event Event parameters
-	 */
-	std::vector<std::function<void(const voice_receive_t& event)>> voice_receive;
-	/** @brief Event handler function pointer for voice track marker event
-	 * @param event Event parameters
-	 */
-	std::vector<std::function<void(const voice_track_marker_t& event)>> voice_track_marker;
-	/** @brief Event handler function pointer for guild join request delete event
-	 * @param event Event parameters
-	 */
-	std::vector<std::function<void(const guild_join_request_delete_t& event)>> guild_join_request_delete;
-	/** @brief Event handler function pointer for stage instance create event
-	 * @param event Event parameters
-	 */
-	std::vector<std::function<void(const stage_instance_create_t& event)>> stage_instance_create;
-	/** @brief Event handler function pointer for stage instance update event
-	 * @param event Event parameters
-	 */
-	std::vector<std::function<void(const stage_instance_update_t& event)>> stage_instance_update;
-	/** @brief Event handler function pointer for stage instance delete event
-	 * @param event Event parameters
-	 */
-	std::vector<std::function<void(const stage_instance_delete_t& event)>> stage_instance_delete;
-	/** @brief Event handler function pointer for guild sticker update event
-	 * @param event Event parameters
-	 */
-	std::vector<std::function<void(const guild_stickers_update_t& event)>> stickers_update;
-};
-
-/**
- * @brief The dpp::exception class derives from std::exception and supports some other
- * ways of passing in error details such as via std::string.
- */
-class exception : public std::exception
-{
-	/**
-	 * @brief Exception message
-	 */
-	std::string msg;
-
-public:
-
-	using std::exception::exception;
-
-	/**
-	 * @brief Construct a new exception object
-	 */
-	exception() = default;
-
-	/**
-	 * @brief Construct a new exception object
-	 * 
-	 * @param what reason message
-	 */
-	explicit exception(const char* what) : msg(what) { }
-
-	/**
-	 * @brief Construct a new exception object
-	 * 
-	 * @param what reason message
-	 * @param len length of reason message
-	 */
-	exception(const char* what, size_t len) : msg(what, len) { }
-
-	/**
-	 * @brief Construct a new exception object
-	 * 
-	 * @param what reason message
-	 */
-	explicit exception(const std::string& what) : msg(what) { }
-	
-	/**
-	 * @brief Construct a new exception object
-	 * 
-	 * @param what reason message
-	 */
-	explicit exception(std::string&& what) : msg(std::move(what)) { }
-
-	/**
-	 * @brief Construct a new exception object (copy constructor)
-	 */
-	exception(const exception&) = default;
-
-	/**
-	 * @brief Construct a new exception object (move constructor)
-	 */
-	exception(exception&&) = default;
-
-	/**
-	 * @brief Destroy the exception object
-	 */
-	~exception() override = default;
-
-	/**
-	 * @brief Copy assignment operator
-	 * 
-	 * @return exception& reference to self
-	 */
-	exception & operator = (const exception &) = default;
-
-	/**
-	 * @brief Move assignment operator
-	 * 
-	 * @return exception& reference to self
-	 */
-	exception & operator = (exception&&) = default;
-
-	/**
-	 * @brief Get exception message
-	 * 
-	 * @return const char* error message
-	 */
-	[[nodiscard]] const char* what() const noexcept override { return msg.c_str(); };
-
 };
 
 };
