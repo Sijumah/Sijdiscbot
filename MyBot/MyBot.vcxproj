@@ -140,7 +140,8 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <LanguageStandard>stdcpp17</LanguageStandard>
+      <LanguageStandard>stdcpplatest</LanguageStandard>
+      <LanguageStandard_C>stdc17</LanguageStandard_C>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -179,6 +180,12 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="discord_profile_filesystem.ixx" />
+    <ClCompile Include="dunedefs.ixx" />
+    <ClCompile Include="duneevents.ixx" />
+    <ClCompile Include="dunefactions.ixx" />
+    <ClCompile Include="dunegame.ixx" />
+    <ClCompile Include="dunemap.ixx" />
     <ClCompile Include="MyBot.cpp" />
   </ItemGroup>
   <ItemGroup>

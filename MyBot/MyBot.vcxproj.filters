@@ -16,10 +16,34 @@
     <Filter Include="DPP">
       <UniqueIdentifier>{0c7369e9-66c5-45ca-8a7d-8891f46001be}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\DUNE">
+      <UniqueIdentifier>{35ea5921-20e5-453e-a039-765d89ba26c9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Utility">
+      <UniqueIdentifier>{f8042858-9650-49eb-ada1-4e7c79db4623}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MyBot.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="dunegame.ixx">
+      <Filter>Source Files\DUNE</Filter>
+    </ClCompile>
+    <ClCompile Include="discord_profile_filesystem.ixx">
+      <Filter>Source Files\Utility</Filter>
+    </ClCompile>
+    <ClCompile Include="dunefactions.ixx">
+      <Filter>Source Files\DUNE</Filter>
+    </ClCompile>
+    <ClCompile Include="dunemap.ixx">
+      <Filter>Source Files\DUNE</Filter>
+    </ClCompile>
+    <ClCompile Include="dunedefs.ixx">
+      <Filter>Source Files\DUNE</Filter>
+    </ClCompile>
+    <ClCompile Include="duneevents.ixx">
+      <Filter>Source Files\DUNE</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
