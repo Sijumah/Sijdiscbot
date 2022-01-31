@@ -6,7 +6,7 @@ int main()
     try {
         // Be sure to place your token in the line below, and uncomment the line
         // Follow steps here to get a token: https://dpp.dev/creating-a-bot-application.html
-        //dpp::cluster bot("place token here");
+        dpp::cluster bot("ODI1MTkwOTEyMDM1NjUxNjA0.YF6U7A.SCdoZFZ5cJzM2HsWhUP6Q2vyNpY");
 
         bot.on_ready([&bot](const dpp::ready_t& event) {
             bot.log(dpp::ll_info, "Logged in as " + bot.me.username);
@@ -25,10 +25,12 @@ int main()
         });
 
         bot.start(false);
+ 
     }
     catch (const std::exception& e) {
         std::cout << "Error: " << e.what() << "\n";
     }
+
 
     return 0;
 }
