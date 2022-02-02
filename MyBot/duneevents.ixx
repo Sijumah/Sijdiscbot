@@ -2,6 +2,7 @@ module;
 
 #include <tuple>
 #include <string>
+#include <deque>
 
 export module duneevents;
 
@@ -9,7 +10,7 @@ export module duneevents;
 
 export namespace dunegame {
 
-std::pair<std::string,std::string> event_flags;  //Ie "fremen have gone yet".
+std::deque<std::pair<std::string,std::string>> event_flags;  //Ie "fremen have gone yet", "yes".
 
 struct default_faction_event_handler {
 

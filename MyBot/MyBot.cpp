@@ -1,5 +1,5 @@
 ﻿#include <string>
-std::string Sbot_token = "ODI1MTkwOTEyMDM1NjUxNjA0.YF6U7A.YV_uTW_15FqkUnIZ2nxvz188gRo";
+std::string Sbot_token = "";
 
 
 #define mainve
