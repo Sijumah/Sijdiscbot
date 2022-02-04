@@ -45,6 +45,9 @@
     <ClCompile Include="duneevents.ixx">
       <Filter>Source Files\DUNE</Filter>
     </ClCompile>
+    <ClCompile Include="miscfunctions.ixx">
+      <Filter>Source Files\Utility</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="dependencies\include\dpp-9.0\dpp\auditlog.h">

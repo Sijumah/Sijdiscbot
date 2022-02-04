@@ -13,11 +13,27 @@ import dunedefs;
 import discord_profile_filesystem;
 import dunemap;
 
-
 export namespace dunegame {
+
+
+struct treachery_card_deck{};
+struct treachery_card{};
+struct traitor_card{};
+
 
 struct general{};
 struct ascendancy{};
+
+struct hero{
+std::string art_file_path;
+unsigned short strength;
+std::string name;
+terri location;  //Location once deployed
+std::pair<bool,basefaction*> isprisoner;  //starts at 0, if its 1, after a battle, all prisoners are returned to their original faction, held as the basefaction*. Upon constructing this, set their basefaction to be the owner from the outset. 
+bool isdead;  //if dead, they are suceptible to the tleilaxu revival
+bool isfacedown;  //if theyre dead and this is the case, they may not be revived again until etc etc.
+
+};
 
 
 struct basefaction {
@@ -32,13 +48,16 @@ std::vector<force_token> faction_army;
 general faction_general;
 ascendancy faction_ascendancy;
 unsigned int internal_game_id;  //A randomized number incase the game needs a specific identifier for this faction. 
+std::vector<hero> heroes;
+basefaction* ally;  //once they are allied, their ally is placed here
+std::string alliance_ability;  //a blurb of the alliance ability sent to the players
+std::string faction_abilities;  //a blurb of the faction abilities sent to the players
+std::vector<treachery_card*> treachery_cards;
 
 
-
-
-void move_forces_to_map(board_map* the_map, terri location, unsigned short supsector_present,std::vector<force_token*>& forces_to_remove){
-    //the_map->unit_placements.push_back(unit_node{the_map->match_map(location),supsector_present,this,forces_to_remove});
-the_map->hii.push_back(6);
+void move_forces_to_map(board_map* the_map, terri location, unsigned short sector_travelling_to, std::vector<force_token*>& forces_to_remove) {
+    the_map->unit_placements.push_back(unit_node{ the_map->match_map(location),sector_travelling_to,this,forces_to_remove });
+    //This does NOT move units from one vector to another; a faction is always in possession of their troops.
 };
 
 
