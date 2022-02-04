@@ -5,6 +5,8 @@ module;
 #include <deque>
 #include <vector>
 #include <memory>
+#include <array>
+
 export module dunemap;
 
 
@@ -26,20 +28,27 @@ bool is_storm_protected;
 
 
 
-
+struct basefaction;
 
 struct unit_node {
 
 map_territory* territory;
 unsigned short sector_present;  //Ie 0 for 'Storm Start'
-factions faction;
-std::deque<force_token*> forces;
+basefaction* internal_faction_id;
+//unsigned int internal_faction_id;  //This is 'internal_game_id' from the factions module which will identify the specific faction. I could save some processing power by saving a pointer but I don't 
+std::vector<force_token*> forces;
+
+
 
 };
 
 
 struct board_map {
 
+int hi;
+std::vector<int> hii;
+std::deque<unit_node> unit_placements;  //All placements on the map at the moment.
+unsigned short storm_pos;  //Current storm position.
 
 map_territory Broken_Land{"Broken Land",broken_land,0,std::vector<unsigned short>{10,11},0};
 map_territory Old_Gap{ "Old Gap",old_gap,0,std::vector<unsigned short>{8,9,10},0};
@@ -86,9 +95,13 @@ map_territory Polar_Sink{ "The Polar Sink",polar_sink ,0,std::vector<unsigned sh
 map_territory Reserves{"Reserves",reserves,0,std::vector<unsigned short>{},1};
 map_territory Tleilexu_Tanks{"Tleilexu Tanks", tleilexu_tanks,0,std::vector<unsigned short>{},1};
 
+std::array<map_territory*,43> map_conglomerate;  //I realise now that I probably shouldnt have made them all separate (as seen above), but this isn't a processing intensive program.
 
-std::deque<unit_node> unit_placements;  //All placements on the map at the moment.
-unsigned short storm_pos;  //Current storm position.
+map_territory* match_map(terri to_search){
+    for (auto& it: map_conglomerate){if (it->value==to_search){return it;}}
+}
+
+
 };
 
 
