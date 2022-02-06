@@ -12,13 +12,9 @@ export module dunefactions;
 import dunedefs;
 import discord_profile_filesystem;
 import dunemap;
+import dune_decks;
 
 export namespace dunegame {
-
-
-struct treachery_card_deck{};
-struct treachery_card{};
-struct traitor_card{};
 
 
 struct general{};
@@ -66,7 +62,7 @@ void move_forces_to_map(board_map* the_map, terri location, unsigned short secto
 
 
 
-};
+};  //End of basefaction.
 
 
 

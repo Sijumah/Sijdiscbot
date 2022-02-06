@@ -28,7 +28,7 @@ bool is_storm_protected;
 
 
 
-struct basefaction;
+
 
 struct unit_node {
 

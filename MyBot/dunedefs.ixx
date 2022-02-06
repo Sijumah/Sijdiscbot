@@ -34,7 +34,7 @@ terri location;
 
 };
 
-
+struct basefaction;
 
 
 

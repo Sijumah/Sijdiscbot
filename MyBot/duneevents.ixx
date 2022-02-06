@@ -8,7 +8,9 @@ export module duneevents;
 
 
 import dunefactions;
-
+import dunedefs;
+#define yes
+#ifdef yes
 
 
 export namespace dunegame {
@@ -46,21 +48,26 @@ void paid_revival_phase(){};  //prompts people if they want to pay.
 
 void shipping_and_movement(){};  //every time have a 7~ sec prompt button for the spacing guild to go when they want;
 
-bool sector_is_in_storm_check(){};  //for movement purposes and dying purposes
+bool sector_is_in_storm_check();  //for movement purposes and dying purposes
 
-bool territory_has_ally(){};  //if so, disallow movement and beaming into that territory for those people
+bool territory_has_ally();  //if so, disallow movement and beaming into that territory for those people
 
-bool stronghold_has_two_already(){};  //if so, disallow movement and beaming into that territory
+bool stronghold_has_two_already();  //if so, disallow movement and beaming into that territory
 
-basefaction* determine_aggressor(){};  //for tiebreaking purposes
+basefaction* determine_aggressor();  //for tiebreaking purposes
 
 void scout_battles_for_faction(){};  //Scans the unit nodes for the current faction's turn, if they are in any battles. I could make a whole container system for holding all battles at once but I like this and processing speed doesn't matter here.
 
 void prompt_choice_for_battle(){};  //if a single faction is in many.
 
-bool has_heroes_left(){};  //simple check for a battle
+bool has_heroes_left();  //simple check for a battle
 
-void perform_battle(){};
+void perform_battle();
+
+bool for_this_phase_treachery_card_scan();  //scans all the factions to see if they have a card that can be used this phase
+
+void for_this_phase_treachery_card_prompt(){};  //prompts the current (or maybe all?) faction(s) for 7~ if they want to use a card this phase.
+
 
 
 
@@ -73,3 +80,4 @@ void perform_battle(){};
 
 };  //End of namespace dunegame.
 
+#endif

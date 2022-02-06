@@ -186,6 +186,7 @@
     <ClCompile Include="dunefactions.ixx" />
     <ClCompile Include="dunegame.ixx" />
     <ClCompile Include="dunemap.ixx" />
+    <ClCompile Include="dune_decks.ixx" />
     <ClCompile Include="miscfunctions.ixx" />
     <ClCompile Include="MyBot.cpp" />
   </ItemGroup>
