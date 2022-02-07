@@ -2,7 +2,21 @@
 
 #include <iostream>
 #include <string>
-std::string Sbot_token = "ODI1MTkwOTEyMDM1NjUxNjA0.YF6U7A.J6Am9qjlXKqOxP_9aJl-AvKkITY";
+#include <fstream>
+
+
+std::string get_token() {
+
+    std::ifstream reader("C:\\Users\\Sijumah\\Desktop\\discordtoken.txt",std::ifstream::in);
+    //char buffer[61];
+    std::string answer;
+    std::getline(reader, answer);
+    reader.close();
+    return answer;
+    
+
+};
+std::string Sbot_token = get_token();
 
 
 #define mainver 1
@@ -19,7 +33,9 @@ std::string Sbot_token = "ODI1MTkwOTEyMDM1NjUxNjA0.YF6U7A.J6Am9qjlXKqOxP_9aJl-Av
 
 #if selector == mainver
 
-int main() { std::cout << "Hi";  return 0; };
+int main() {
+
+    return 0; };
 
 
 
