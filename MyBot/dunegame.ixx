@@ -7,6 +7,7 @@ export module dunegame;
 
 import dunemap;
 import dunefactions;
+import dune_decks; 
 
 //TODO: remember to number the territories on the map
 //TODO reminder to check if factions are separated by a storm-- if they are, they don't have to fight. 
@@ -27,6 +28,9 @@ struct dunegame {
 
 board_map game_map;
 std::vector<basefaction> factions;
+dune_deck spice_deck;  //For this, create a 'faction hand' right here owned by the game, so to speak. 
+dune_deck treachery_deck;
+dune_deck traitor_deck;  //Load this with the traitor cards found in the factions' hands themselves. 
 
 
 };  //End of dunegame struct

@@ -1,28 +1,33 @@
-﻿#include <string>
-std::string Sbot_token = "";
+﻿#pragma once
+
+#include <iostream>
+#include <string>
+std::string Sbot_token = "ODI1MTkwOTEyMDM1NjUxNjA0.YF6U7A.J6Am9qjlXKqOxP_9aJl-AvKkITY";
 
 
-#define mainve
-#define buttontestve
-#define messagetestve
-#define menutestve
-#define manybuttonver
+#define mainver 1
+#define buttontestver 2
+#define messagetestver 3
+#define menutestver 4
+#define manybuttonver 5
+
+
+#define selector mainver
 
 
 
 
+#if selector == mainver
 
-
-
-#ifdef mainver
-
-int main(){return 0;};
+int main() { std::cout << "Hi";  return 0; };
 
 
 
 #endif
 
-#ifdef manybuttonver
+
+
+#if selector == manybuttonver
 
 #include <dpp/dpp.h>
 
@@ -73,7 +78,7 @@ return 0;
 
 
 
-#ifdef menutestver
+#if selector == menutestver
 #include <dpp/dpp.h>
 
 using json = nlohmann::json;
@@ -127,7 +132,7 @@ int main()
 
 
 
-#ifdef buttontestver
+#if selector == buttontestver
 
 #include <dpp/dpp.h>
 #include <iostream>
@@ -183,7 +188,7 @@ int main()
 
 
 
-#ifdef messagetestver
+#if selector ==  messagetestver
 
 #include <dpp/dpp.h>
 #include <iostream>

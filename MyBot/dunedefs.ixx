@@ -9,7 +9,7 @@ export module dunedefs;
 
 export namespace dunegame {
 
-
+    
 enum terri {
         broken_land, old_gap, basin, sihaya_ridge, gara_kulon,
         red_chasm, south_mesa, cielago_east, cielago_south, meridian,
@@ -35,7 +35,7 @@ terri location;
 };
 
 struct basefaction;
-
+struct map_territory;
 
 
 

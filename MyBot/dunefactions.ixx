@@ -17,10 +17,16 @@ import dune_decks;
 export namespace dunegame {
 
 
-struct general{};
+struct general: public force_token{
+    
+
+    void general_invoke();
+//constructor that fulfills force_token()
+};
 struct ascendancy{};
 
 struct hero{
+
 std::string art_file_path;
 unsigned short strength;
 std::string name;
@@ -28,6 +34,8 @@ terri location;  //Location once deployed
 std::pair<bool,basefaction*> isprisoner;  //starts at 0, if its 1, after a battle, all prisoners are returned to their original faction, held as the basefaction*. Upon constructing this, set their basefaction to be the owner from the outset. 
 bool isdead;  //if dead, they are suceptible to the tleilaxu revival
 bool isfacedown;  //if theyre dead and this is the case, they may not be revived again until etc etc.
+traitor_card accompanying_card;  //The traitor deck will be loaded up with these very cards.
+
 
 };
 
@@ -48,8 +56,8 @@ std::vector<hero> heroes;
 basefaction* ally;  //once they are allied, their ally is placed here
 std::string alliance_ability;  //a blurb of the alliance ability sent to the players
 std::string faction_abilities;  //a blurb of the faction abilities sent to the players
-std::vector<treachery_card*> treachery_cards;
-
+faction_hand treachery_cards;
+faction_hand traitor_cards; 
 
 void move_forces_to_map(board_map* the_map, terri location, unsigned short sector_travelling_to, std::vector<force_token*>& forces_to_remove) {
     the_map->unit_placements.push_back(unit_node{ the_map->match_map(location),sector_travelling_to,this,forces_to_remove });

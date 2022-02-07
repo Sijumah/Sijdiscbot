@@ -45,8 +45,6 @@ std::vector<force_token*> forces;
 
 struct board_map {
 
-int hi;
-std::vector<int> hii;
 std::deque<unit_node> unit_placements;  //All placements on the map at the moment.
 unsigned short storm_pos;  //Current storm position.
 
