@@ -4,6 +4,7 @@
 #include <string>
 #include <fstream>
 
+//#include "Sijf.hpp"
 
 std::string get_token() {
 
@@ -33,8 +34,12 @@ std::string Sbot_token = get_token();
 
 #if selector == mainver
 
+import discord_profile_filesystem;
+
 int main() {
 
+    Sijdisc::profile_collection bob("C:/users/Sijumah/desktop/accounts", std::vector<std::string>{"kent","billhelm"});
+    bob.add_new_profile("12345", "stacy");
     return 0; };
 
 
