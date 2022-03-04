@@ -1,4 +1,4 @@
-module;
+/*module;
 
 #include <tuple>
 #include <string>
@@ -9,11 +9,20 @@ export module duneevents;
 
 import dunefactions;
 import dunedefs;
-#define yes
-#ifdef yes
 
 
-export namespace dunegame {
+export */
+
+#pragma once
+#include <tuple>
+#include <string>
+#include <deque>
+
+#include "dunefactions.hpp"
+#include "dunedefs.hpp"
+
+
+namespace dunegame {
 
 std::deque<std::pair<std::string,std::string>> event_flags;  //Ie "fremen have gone yet", "yes".
 
@@ -79,5 +88,3 @@ void for_this_phase_treachery_card_prompt(){};  //prompts the current (or maybe 
 
 
 };  //End of namespace dunegame.
-
-#endif

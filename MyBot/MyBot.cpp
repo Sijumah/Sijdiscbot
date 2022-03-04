@@ -4,8 +4,10 @@
 #include <string>
 #include <fstream>
 
+#include "dunedefs.hpp"
 //#include "Sijf.hpp"
 
+//F:\Folder in Which Things are Storesd\Hobbies, etc\Coding\discord_bot_files\dunefiles
 std::string get_token() {
 
     std::ifstream reader("C:\\Users\\Sijumah\\Desktop\\discordtoken.txt",std::ifstream::in);
@@ -34,12 +36,17 @@ std::string Sbot_token = get_token();
 
 #if selector == mainver
 
-import discord_profile_filesystem;
+#include "discord_profile_filesystem.hpp"
 
 int main() {
-
-    Sijdisc::profile_collection bob("C:/users/Sijumah/desktop/accounts", std::vector<std::string>{"kent","billhelm"});
-    bob.add_new_profile("12345", "stacy");
+    
+    //C:\SijPrograms\accounts
+    //"C:/Users/sicma/Desktop/accounts"
+  //  Sijdisc::profile_collection bob("C:/SijPrograms/accounts", std::vector<std::string>{"kent","billhelm"});
+   // bob.add_new_profile("12345", "janus2");
+    
+    hvylog("hi")
+    
     return 0; };
 
 

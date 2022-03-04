@@ -1,10 +1,16 @@
-module;
+/*module;
+
+#pragma once
 
 #include <string>
 #include <deque>
 #include <tuple>
 #include <memory>
 #include <vector>
+#include <optional>
+
+
+
 export module dunefactions;
 
 
@@ -14,7 +20,22 @@ import discord_profile_filesystem;
 import dunemap;
 import dune_decks;
 
-export namespace dunegame {
+export */
+
+#pragma once
+
+#include <string>
+#include <deque>
+#include <tuple>
+#include <memory>
+#include <vector>
+#include <optional>
+
+#include "dunedefs.hpp"
+#include "discord_profile_filesystem.hpp"
+#include "dunemap.hpp"
+#include "dune_decks.hpp"
+namespace dunegame {
 
 
 struct general: public force_token{
@@ -53,11 +74,13 @@ general faction_general;
 ascendancy faction_ascendancy;
 unsigned int internal_game_id;  //A randomized number incase the game needs a specific identifier for this faction. 
 std::vector<hero> heroes;
-basefaction* ally;  //once they are allied, their ally is placed here
+std::pair<bool,basefaction*> isallied;  //once they are allied, their ally is placed here
 std::string alliance_ability;  //a blurb of the alliance ability sent to the players
 std::string faction_abilities;  //a blurb of the faction abilities sent to the players
 faction_hand treachery_cards;
 faction_hand traitor_cards; 
+
+//In the basefaction constructor have the traitor cards add themselves to the traitor card deck
 
 void move_forces_to_map(board_map* the_map, terri location, unsigned short sector_travelling_to, std::vector<force_token*>& forces_to_remove) {
     the_map->unit_placements.push_back(unit_node{ the_map->match_map(location),sector_travelling_to,this,forces_to_remove });

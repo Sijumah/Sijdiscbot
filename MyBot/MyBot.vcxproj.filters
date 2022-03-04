@@ -27,28 +27,28 @@
     <ClCompile Include="MyBot.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="dunegame.ixx">
+    <ClCompile Include="dunegame.hpp">
       <Filter>Source Files\DUNE</Filter>
     </ClCompile>
-    <ClCompile Include="discord_profile_filesystem.ixx">
+    <ClCompile Include="discord_profile_filesystem.hpp">
       <Filter>Source Files\Utility</Filter>
     </ClCompile>
-    <ClCompile Include="dunefactions.ixx">
+    <ClCompile Include="dunefactions.hpp">
       <Filter>Source Files\DUNE</Filter>
     </ClCompile>
-    <ClCompile Include="dunemap.ixx">
+    <ClCompile Include="dunemap.hpp">
       <Filter>Source Files\DUNE</Filter>
     </ClCompile>
-    <ClCompile Include="dunedefs.ixx">
+    <ClCompile Include="dunedefs.hpp">
       <Filter>Source Files\DUNE</Filter>
     </ClCompile>
-    <ClCompile Include="duneevents.ixx">
+    <ClCompile Include="duneevents.hpp">
       <Filter>Source Files\DUNE</Filter>
     </ClCompile>
-    <ClCompile Include="miscfunctions.ixx">
+    <ClCompile Include="miscfunctions.hpp">
       <Filter>Source Files\Utility</Filter>
     </ClCompile>
-    <ClCompile Include="dune_decks.ixx">
+    <ClCompile Include="dune_decks.hpp">
       <Filter>Source Files\DUNE</Filter>
     </ClCompile>
   </ItemGroup>
@@ -175,6 +175,12 @@
     </ClInclude>
     <ClInclude Include="dependencies\include\dpp-9.0\dpp\wsclient.h">
       <Filter>DPP</Filter>
+    </ClInclude>
+    <ClInclude Include="dunespicecards.hpp">
+      <Filter>Source Files\DUNE</Filter>
+    </ClInclude>
+    <ClInclude Include="dunetreacherycards.hpp">
+      <Filter>Source Files\DUNE</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

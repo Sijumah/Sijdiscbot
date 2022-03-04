@@ -1,4 +1,4 @@
-module;
+/*module;
 
 #include <deque>
 #include <string>
@@ -7,13 +7,35 @@ module;
 export module dunedefs;
 
 
-export namespace dunegame {
+export */
+
+#pragma once
+
+#include <deque>
+#include <string>
+#include <iostream>
+
+
+//chosen image format
+std::string cif = ".png";
+
+void clog(const std::string& message) { std::cout << message + "\n"; }
+
+constexpr auto lglight = 1;
+constexpr auto lgheavy = 2;
+
+constexpr auto loggingmode = 2;
+//std::string discord_bot_filepath ="F:\\Folder in Which Things are Storesd\\Hobbies, etc\\Coding\\discord_bot_files";
+#define hvylog(message) if constexpr (loggingmode==2){clog(message);}
+
+
+namespace dunegame {
 
     
 enum terri {
         broken_land, old_gap, basin, sihaya_ridge, gara_kulon,
         red_chasm, south_mesa, cielago_east, cielago_south, meridian,
-        habanya_ridge_flat, habanya_sietch, habanya_erg, the_greater_flat, the_great_flat,
+        habbanya_ridge_flat, habbanya_sietch, habbanya_erg, the_greater_flat, the_great_flat,
         funeral_plain, bight_of_the_cliff, rock_outcroppings, plastic_basin, tsimpo,
         hagga_basin, arsunt, carthag, imperial_basin, arrakeen,
         rim_wall_west, hole_in_the_rock, shield_wall, false_wall_east, pasty_mesa,

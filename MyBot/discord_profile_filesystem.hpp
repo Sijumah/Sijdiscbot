@@ -1,34 +1,33 @@
-﻿module;
-#pragma once 
+﻿#pragma once 
 
 #include <string.h>
 #include <string>
 #include <deque>
 #include <tuple>
 #include <array>
-
+#include<vector>
+#include <optional>
 
 #include "Sijf.hpp"
 
-export module discord_profile_filesystem;
 
 
-
-
-export namespace Sijdisc {
+namespace Sijdisc {
 
 struct gameprofile {
 
 
-std::string game_name;
-std::deque<std::pair<std::string,double>> game_stats;  //A deque of for instance, "Total Soldiers Placed","300.0". This is retrieved by reading and saving to files. 
-std::deque<std::pair<std::string,std::string>> achievements;  //Achievements on a game-per-game basis ie... "Aggressive!","Place 500 soldiers".
+    std::string game_name;
+    std::deque<std::pair<std::string,double>> game_stats;  //A deque of for instance, "Total Soldiers Placed","300.0". This is retrieved by reading and saving to files. 
+    std::deque<std::pair<std::string,std::string>> achievements;  //Achievements on a game-per-game basis ie... "Aggressive!","Place 500 soldiers".
 
-gameprofile(const std::string& supgame_name, const std::deque<std::pair<std::string, double>>& supgame_stats,
-            const std::deque<std::pair<std::string, std::string>>& supachievments) :
-    game_name(supgame_name), game_stats(supgame_stats), achievements(supachievments) 
-{}
+    gameprofile(const std::string& supgame_name, const std::deque<std::pair<std::string, double>>& supgame_stats = {},
+        const std::deque<std::pair<std::string, std::string>>& supachievments = {}) :
+        game_name(supgame_name), game_stats(supgame_stats), achievements(supachievments)
+    {}
 
+    bool has_achievement_by_name(const std::string& searched_achievment) { for (auto&& it : achievements) { if (it.first == searched_achievment) { return true; } }return false; }
+    std::optional<std::pair<std::string, double>*> find_stat_by_name(const std::string& supname) { for (auto&& it : game_stats) { if (it.first == supname) { return &it; } }return std::nullopt; }
 
 };
 
@@ -39,15 +38,41 @@ struct profile {
 
 
 
-std::string discord_id;
-std::string personal_nickname;  //prompt for a nickname when creating the profile
+    std::string discord_id;
+    std::string personal_nickname;  //prompt for a nickname when creating the profile
 
-std::deque<gameprofile> game_ledger;
+    std::deque<gameprofile> game_ledger;
 
-profile(const std::string& supid = {}, const std::string& supnickname = {}, 
-        const std::deque<gameprofile>& supprofile = {}) :
-    discord_id(supid), personal_nickname(supnickname), game_ledger(supprofile)
-{};
+    profile(const std::string& supid = {}, const std::string& supnickname = {}, 
+            const std::deque<gameprofile>& supprofile = {}) : 
+        discord_id(supid), personal_nickname(supnickname), game_ledger(supprofile)
+    {};
+
+    std::optional<gameprofile*> 
+    find_game_in_ledger(const std::string& game_name) { for (auto&& it : this->game_ledger) { if (it.game_name == game_name) { return &it; } }return std::nullopt; }
+
+    void add_game_to_ledger(const std::string& game_name, const std::deque<std::pair<std::string, double>>& supgame_stats = {},
+                                 const std::deque<std::pair<std::string, std::string>>& supachievments = {}) { 
+        if (find_game_in_ledger(game_name)) { return; }  //If game already exists, return.
+        game_ledger.emplace_back(game_name,supgame_stats,supachievments); }  //Otherwise add it to the list of games with the given achievements and stats.
+
+    void add_modify_achievement_by_names(const std::string& gamename,const std::pair<std::string,std::string>& supachiev) {
+        auto game = find_game_in_ledger(gamename);
+        if (game) {  //If the game was found
+             if (!(* game)->has_achievement_by_name(supachiev.first)) {  //If it doesnt already have the achievment,
+             (*game)->achievements.push_back(supachiev); }  //Add it.
+        }
+    }
+
+    void add_modify_stat_by_names(const std::string& gamename,const std::pair<std::string ,double>& supstat) {
+        auto game= find_game_in_ledger(gamename);  //Find the game
+        std::optional<std::pair<std::string, double>*> stat;
+        if (game) {stat = (*game)->find_stat_by_name(supstat.first);  //IF a game was found, find the stat by name.
+             if (stat) { *stat.value() = supstat; }  //If the stat was found, modify it,
+                 else { game.value()->game_stats.push_back(supstat); }  //else, make a new entry for the stat.
+        }
+    };
+
 
 
 };  //End of profile
@@ -68,7 +93,17 @@ struct profile_collection {
         this->collection.push_back(profile(discord_id, nickname, std::deque<gameprofile>{}));
     };
 
-    profile* get_profile_by_name() {Sijf::iterindex_by_pointer};
+    std::optional<profile*> get_profile_by_name(const std::string& supname) { 
+        for (auto&& it : this->collection) { if (it.personal_nickname == supname) return &it; }
+        return std::nullopt; 
+    };
+
+    void add_games_to_profiles_by_name(const std::string& game_name, const Sijc::stl_ish auto& profile_names) {
+        std::optional<profile*> helper;
+        for (auto&& it : profile_names) { helper = get_profile_by_name(it); if (helper) { (*(helper))->add_game_to_ledger(game_name); } }
+    }
+
+
 
 /*
 profile and gameprofile text file:
@@ -110,13 +145,14 @@ profile_collection(const std::string& folder_path, const std::vector<std::string
     std::fstream stream;
     
     //std::array<std::string, 3> 
-    std::vector<std::string> 
-        templat{"personal_nick","discordid","gamelist"};
+    std::vector<std::string>  templat{"personal_nick","discordid","gamelist"};
         
     for (auto&& it : names_without_txt) {    ///One loop is one name-- one profile, one person, one body in christ everlasting, amen.
         stream.open(folder_path + "/"+it + ".txt");
         std::deque<gameprofile> sup_gameprofiles;
-        auto helper = Sijf::ret_many_file_lines<decltype(templat)>(stream, '>', '<',/*'╣', '├',*/ templat);
+        auto helper = Sijf::ret_many_file_lines<std::vector<std::string>>(stream, '>', '<',/*'╣', '├',*/ templat,false);
+        
+        
         //spits out personalnickname discordid gamelist
         auto gamelistseparated = Sijf::breakstring(helper.at(2), '#');  //separate the gamelist into for instance 'dune','poker'
 

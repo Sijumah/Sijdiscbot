@@ -97,7 +97,7 @@
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpplatest</LanguageStandard>
-      <AdditionalOptions>/I"C:\Users\Sijumah\source\repos\Sijumah\Sijfunctions_headers\Sijfunctions_headers\Sijf" /I"C:\Users\Sijumah\source\repos\Sijumah\Sijfunctions_headers\Sijfunctions_headers\misc" %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>/I"C:\Users\sicma\source\repos\Sijumah\Sijfunctions_headers\Sijfunctions_headers\Sijf" /I"C:\Users\sicma\source\repos\Sijumah\Sijfunctions_headers\Sijfunctions_headers\misc" %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -181,14 +181,14 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="discord_profile_filesystem.ixx" />
-    <ClCompile Include="dunedefs.ixx" />
-    <ClCompile Include="duneevents.ixx" />
-    <ClCompile Include="dunefactions.ixx" />
-    <ClCompile Include="dunegame.ixx" />
-    <ClCompile Include="dunemap.ixx" />
-    <ClCompile Include="dune_decks.ixx" />
-    <ClCompile Include="miscfunctions.ixx" />
+    <ClCompile Include="discord_profile_filesystem.hpp" />
+    <ClCompile Include="dunedefs.hpp" />
+    <ClCompile Include="duneevents.hpp" />
+    <ClCompile Include="dunefactions.hpp" />
+    <ClCompile Include="dunegame.hpp" />
+    <ClCompile Include="dunemap.hpp" />
+    <ClCompile Include="dune_decks.hpp" />
+    <ClCompile Include="miscfunctions.hpp" />
     <ClCompile Include="MyBot.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -233,6 +233,8 @@
     <ClInclude Include="dependencies\include\dpp-9.0\dpp\webhook.h" />
     <ClInclude Include="dependencies\include\dpp-9.0\dpp\win32_safe_warnings.h" />
     <ClInclude Include="dependencies\include\dpp-9.0\dpp\wsclient.h" />
+    <ClInclude Include="dunespicecards.hpp" />
+    <ClInclude Include="dunetreacherycards.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
