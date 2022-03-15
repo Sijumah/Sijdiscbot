@@ -22,6 +22,12 @@
     <Filter Include="Source Files\Utility">
       <UniqueIdentifier>{f8042858-9650-49eb-ada1-4e7c79db4623}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Poker">
+      <UniqueIdentifier>{63a1fb09-fe75-4090-8194-98272714db67}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\DUNE\Decks">
+      <UniqueIdentifier>{2a51cb0f-9900-4f8f-8105-6fd3c28a9895}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MyBot.cpp">
@@ -49,7 +55,7 @@
       <Filter>Source Files\Utility</Filter>
     </ClCompile>
     <ClCompile Include="dune_decks.hpp">
-      <Filter>Source Files\DUNE</Filter>
+      <Filter>Source Files\DUNE\Decks</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -177,10 +183,10 @@
       <Filter>DPP</Filter>
     </ClInclude>
     <ClInclude Include="dunespicecards.hpp">
-      <Filter>Source Files\DUNE</Filter>
+      <Filter>Source Files\DUNE\Decks</Filter>
     </ClInclude>
     <ClInclude Include="dunetreacherycards.hpp">
-      <Filter>Source Files\DUNE</Filter>
+      <Filter>Source Files\DUNE\Decks</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

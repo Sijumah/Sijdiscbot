@@ -60,5 +60,4 @@ struct basefaction;
 struct map_territory;
 
 
-
 };  //End of namespace dunegame.

@@ -37,9 +37,21 @@ std::string Sbot_token = get_token();
 #if selector == mainver
 
 #include "discord_profile_filesystem.hpp"
+#include <random>
+#include <array>
 
 int main() {
     
+    std::array<int,6> boo{ 0,0,0,0,0,0 };
+    std::uniform_int_distribution<> distrib(1, 6);
+    std::random_device rd;
+    std::mt19937 gen(rd());
+    
+    for (int i = 70000; i != 0; i--) {
+        auto res = distrib(gen);
+        boo.at(res)++;
+        std::cout << res << std::endl;
+    }
     //C:\SijPrograms\accounts
     //"C:/Users/sicma/Desktop/accounts"
   //  Sijdisc::profile_collection bob("C:/SijPrograms/accounts", std::vector<std::string>{"kent","billhelm"});

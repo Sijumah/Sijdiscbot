@@ -1,27 +1,3 @@
-/*module;
-
-#pragma once
-
-#include <string>
-#include <deque>
-#include <tuple>
-#include <memory>
-#include <vector>
-#include <optional>
-
-
-
-export module dunefactions;
-
-
-
-import dunedefs;
-import discord_profile_filesystem;
-import dunemap;
-import dune_decks;
-
-export */
-
 #pragma once
 
 #include <string>

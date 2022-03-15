@@ -19,7 +19,7 @@ export */
 #include "dunemap.hpp"
 #include "dunefactions.hpp"
 #include "dune_decks.hpp"
-
+#include "dunespicecards.hpp"
 
 namespace dunegame {
 
@@ -37,6 +37,22 @@ namespace dunegame {
 //TODO: //For truthtrance, have a game option that enables an admin to... enter an "enduring condition" like >player1 must not invade X this turn. and a turn number for it to expire on.
 //TODO: in dune decks:   /*ADD PATH FOR BLANK CARD*/
 //in dunemap: map_territory create the spawnworm() function
+//TODO: write to console/discord that spice was placed. dunespicecards.hpp
+//TODO: create the ability to change when worms appear or disappear (ie, when NEW worms appear, or just the turn after)
+//TODO: reset "numworms" in the dune spice deck every turn (yes, even if we're following the 'worms persist until new worms appear' rule)
+//dune_deck constructor:   sentinel(this->cards.begin()), blank_card("hello"/*ADD PATH FOR BLANK CARD*/),
+//spice_worm_card member top of discard pile pointer may need to be a pointer to a pointer
+/*TODO: add prompt messages to spice_worm_card for if sandtrout is active or not*/
+//worms are path/dunefiles/wormcard+cif and sandtrout are path/dunefiles/sandtroutcard+cif
+
+
+//Helping notes:
+//For dune_deck and spice deck and so on, you deal players cards by using the dune_deck players_hands pointer holder
+//Spice cards are discord_bot_filepath+/dunefiles/spice_ and then a lowercase instanciation of the map territory ie wind_pass_north and then "cif" which is the chosen filetype like png. So: bot_filepath/dunefiles/spice_cielago_south.png"
+//wormcards are bot_filepath/dunefiles/wormcard.cif where .cif is png probably
+
+
+
 
 struct dunegame {
 
@@ -47,8 +63,8 @@ std::vector<basefaction> factions;
 
 spice_deck spice_deck;  //For this, create a 'faction hand' right here owned by the game, so to speak. 
 
-dune_deck treachery_deck;
-dune_deck traitor_deck;  //Load this with the traitor cards found in the factions' hands themselves. 
+//dune_deck treachery_deck;
+//dune_deck traitor_deck;  //Load this with the traitor cards found in the factions' hands themselves. 
 
 
 

@@ -62,7 +62,7 @@ std::vector<force_token*> forces;
 
 struct board_map {
 
-std::deque<unit_node> unit_placements;  //All placements on the map at the moment.
+std::vector<unit_node> unit_placements;  //All placements on the map at the moment.
 unsigned short storm_pos;  //Current storm position.
 
 map_territory Broken_Land{"Broken Land",broken_land,0,std::vector<unsigned short>{10,11},0,false};
@@ -110,7 +110,16 @@ map_territory Polar_Sink{ "The Polar Sink",polar_sink ,0,std::vector<unsigned sh
 map_territory Reserves{"Reserves",reserves,0,std::vector<unsigned short>{},1,false };
 map_territory Tleilexu_Tanks{"Tleilexu Tanks", tleilexu_tanks,0,std::vector<unsigned short>{},1,false };
 
-std::array<map_territory*,43> map_conglomerate;  //I realise now that I probably shouldnt have made them all separate (as seen above), but this isn't a processing intensive program.
+std::array<map_territory*,42> map_conglomerate{
+    &Broken_Land,&Old_Gap,&Basin,&Sihaya_Ridge,&Gara_Kulon,&Red_Chasm,&South_Mesa,&Cielago_East,&Cielago_South,&Meridian,&Habbanya_Ridge_Flat,
+    & Habbanya_Sietch,&Habbanya_Erg,&The_Greater_Flat,&The_Great_Flat,&Funeral_Plain,&Bight_Of_The_Cliff,&Sietch_Tabr,&Rock_Outcroppings,
+    &Tsimpo,&Imperial_Basin,&Arrakeen,&Rim_Wall_West,&Hole_In_The_Rock,&Shield_Wall,&Pasty_Mesa,&Tueks_Sietch,&False_Wall_South,&Cielago_Depression,
+    &Cielago_West,&False_Wall_West,&Plastic_Basin,&Hagga_Basin,&Carthag,&Arsunt,&False_Wall_East,&The_Minor_Erg,&Harg_Pass,&Cielago_North,&Wind_Pass_North,
+    &Wind_Pass,&Polar_Sink //,&Reserves,&Tleilexu_Tanks  <<array size is 42 including these
+
+}
+
+;  //I realise now that I probably shouldnt have made them all separate (as seen above), but this isn't a processing intensive program.
 
 map_territory* match_map(terri to_search){
     for (auto& it: map_conglomerate){if (it->value==to_search){return it;}}

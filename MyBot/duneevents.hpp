@@ -1,19 +1,6 @@
-/*module;
-
-#include <tuple>
-#include <string>
-#include <deque>
-
-export module duneevents;
-
-
-import dunefactions;
-import dunedefs;
-
-
-export */
-
 #pragma once
+
+
 #include <tuple>
 #include <string>
 #include <deque>
