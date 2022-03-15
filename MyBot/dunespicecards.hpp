@@ -9,7 +9,7 @@
 namespace dunegame {
 
 
-    struct spice_deck;
+    //struct spice_deck;
 	
 struct spice_card: public card{
 
@@ -23,7 +23,7 @@ struct spice_card: public card{
 
     spice_card(const std::string& sup_card_image,map_territory* suplinked_territory,short supamount) :card(sup_card_image), linked_territory(suplinked_territory), amount(supamount) {};
     spice_card(const std::string& sup_card_image) :card(sup_card_image) {};
-};  //End of spice card struct.
+};  //End of spice card struct. 
 
 
 

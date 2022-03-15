@@ -1,21 +1,7 @@
-/*module;
-
-#include <vector>
-
-
-export module dunegame;
-
-import dunemap;
-import dunefactions;
-import dune_decks; 
-
-
-export */ 
-
 #pragma once
 
-#include <vector>
 
+#include "dunedefs.hpp"
 #include "dunemap.hpp"
 #include "dunefactions.hpp"
 #include "dune_decks.hpp"
@@ -44,7 +30,7 @@ namespace dunegame {
 //spice_worm_card member top of discard pile pointer may need to be a pointer to a pointer
 /*TODO: add prompt messages to spice_worm_card for if sandtrout is active or not*/
 //worms are path/dunefiles/wormcard+cif and sandtrout are path/dunefiles/sandtroutcard+cif
-
+//reenable hvylog in dunedefs and so far, its only appearance in dune_decks::card::card()
 
 //Helping notes:
 //For dune_deck and spice deck and so on, you deal players cards by using the dune_deck players_hands pointer holder

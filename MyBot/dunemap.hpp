@@ -1,28 +1,4 @@
-/*module;
-#include <string>
-#include <list>
-#include <tuple>
-#include <deque>
-#include <vector>
-#include <memory>
-#include <array>
-
-export module dunemap;
-
-
-
-import dunedefs;
-
-export */
 #pragma once
-
-#include <string>
-#include <list>
-#include <tuple>
-#include <deque>
-#include <vector>
-#include <memory>
-#include <array>
 
 #include "dunedefs.hpp"
 
@@ -75,6 +51,7 @@ map_territory South_Mesa{ "South Mesa",south_mesa ,0,std::vector<unsigned short>
 map_territory Cielago_East{ "Cielago East", cielago_east,0,std::vector<unsigned short>{2,3},0,false };
 map_territory Cielago_South{ "Cielago South", cielago_south,0,std::vector<unsigned short>{1,2},0,false };
 map_territory Meridian{ "Meridian", meridian,0,std::vector<unsigned short>{0,1},0 ,false };
+//10
 map_territory Habbanya_Ridge_Flat{ "Habbanya Ridge Flat", habbanya_ridge_flat,0,std::vector<unsigned short>{16,17},0 ,false };
 map_territory Habbanya_Sietch{ "Habbanya Sietch",habbanya_sietch ,0,std::vector<unsigned short>{16},0,false };
 map_territory Habbanya_Erg{ "Habbanya Erg", habbanya_erg,0,std::vector<unsigned short>{15,16},0 ,false };
@@ -85,6 +62,7 @@ map_territory Bight_Of_The_Cliff{ "Bight Of The Cliff",bight_of_the_cliff ,0,std
 map_territory Sietch_Tabr{ "Sietch Tabr",sietch_tabr ,0,std::vector<unsigned short>{13},1 ,false };
 map_territory Rock_Outcroppings{ "Rock Outcroppings",rock_outcroppings ,0,std::vector<unsigned short>{12,13},0 ,false };
 map_territory Tsimpo{ "Tsimpo", tsimpo,0,std::vector<unsigned short>{10,11,12},0,false };
+//20
 map_territory Imperial_Basin{ "Imperial Basin",imperial_basin ,0,std::vector<unsigned short>{8,9,10},1 ,false };
 map_territory Arrakeen{ "Arrakeen",arrakeen ,0,std::vector<unsigned short>{9},1 ,false };
 map_territory Rim_Wall_West{ "Rim Wall West", rim_wall_west,0,std::vector<unsigned short>{8},1 ,false };
@@ -95,6 +73,7 @@ map_territory Tueks_Sietch{ "Tuek's Sietch",tueks_sietch ,0,std::vector<unsigned
 map_territory False_Wall_South{ "False Wall South", false_wall_south,0,std::vector<unsigned short>{3,4},1 ,false };
 map_territory Cielago_Depression{ "Cielago Depression", cielago_depression,0,std::vector<unsigned short>{0,1,2},0 ,false };
 map_territory Cielago_West{ "Cielago West",cielago_west ,0,std::vector<unsigned short>{0,17},0 ,false };
+//30
 map_territory False_Wall_West{ "False Wall West",false_wall_west ,0,std::vector<unsigned short>{15,16,17},1 ,false };
 map_territory Plastic_Basin{ "Plastic Basin", plastic_basin,0,std::vector<unsigned short>{11,12,13},1,false };
 map_territory Hagga_Basin{ "Hagga Basin", hagga_basin ,0,std::vector<unsigned short>{11,12},0 ,false };
@@ -105,21 +84,20 @@ map_territory The_Minor_Erg{ "The Minor Erg",the_minor_erg ,0,std::vector<unsign
 map_territory Harg_Pass{ "Harg Pass",harg_pass ,0,std::vector<unsigned short>{3,4},0 ,false };
 map_territory Cielago_North{ "Cielago North",cielago_north ,0,std::vector<unsigned short>{0,1,2},0 ,false };
 map_territory Wind_Pass_North{ "Wind Pass North", wind_pass_north,0,std::vector<unsigned short>{16,17},0,false };
+//40
 map_territory Wind_Pass{ "Wind Pass",wind_pass ,0,std::vector<unsigned short>{13,14,15,16},0 ,false };
 map_territory Polar_Sink{ "The Polar Sink",polar_sink ,0,std::vector<unsigned short>{},1 ,false };
 map_territory Reserves{"Reserves",reserves,0,std::vector<unsigned short>{},1,false };
 map_territory Tleilexu_Tanks{"Tleilexu Tanks", tleilexu_tanks,0,std::vector<unsigned short>{},1,false };
 
 std::array<map_territory*,42> map_conglomerate{
-    &Broken_Land,&Old_Gap,&Basin,&Sihaya_Ridge,&Gara_Kulon,&Red_Chasm,&South_Mesa,&Cielago_East,&Cielago_South,&Meridian,&Habbanya_Ridge_Flat,
-    & Habbanya_Sietch,&Habbanya_Erg,&The_Greater_Flat,&The_Great_Flat,&Funeral_Plain,&Bight_Of_The_Cliff,&Sietch_Tabr,&Rock_Outcroppings,
-    &Tsimpo,&Imperial_Basin,&Arrakeen,&Rim_Wall_West,&Hole_In_The_Rock,&Shield_Wall,&Pasty_Mesa,&Tueks_Sietch,&False_Wall_South,&Cielago_Depression,
-    &Cielago_West,&False_Wall_West,&Plastic_Basin,&Hagga_Basin,&Carthag,&Arsunt,&False_Wall_East,&The_Minor_Erg,&Harg_Pass,&Cielago_North,&Wind_Pass_North,
+    &Broken_Land,&Old_Gap,&Basin,&Sihaya_Ridge,&Gara_Kulon,&Red_Chasm,&South_Mesa,&Cielago_East,&Cielago_South,&Meridian,
+    &Habbanya_Ridge_Flat,& Habbanya_Sietch,&Habbanya_Erg,&The_Greater_Flat,&The_Great_Flat,&Funeral_Plain,&Bight_Of_The_Cliff,&Sietch_Tabr,&Rock_Outcroppings,&Tsimpo,
+    &Imperial_Basin,&Arrakeen,&Rim_Wall_West,&Hole_In_The_Rock,&Shield_Wall,&Pasty_Mesa,&Tueks_Sietch,&False_Wall_South,&Cielago_Depression,&Cielago_West,
+    &False_Wall_West,&Plastic_Basin,&Hagga_Basin,&Carthag,&Arsunt,&False_Wall_East,&The_Minor_Erg,&Harg_Pass,&Cielago_North,&Wind_Pass_North,
     &Wind_Pass,&Polar_Sink //,&Reserves,&Tleilexu_Tanks  <<array size is 42 including these
 
-}
-
-;  //I realise now that I probably shouldnt have made them all separate (as seen above), but this isn't a processing intensive program.
+};  //I realise now that I probably shouldnt have made them all separate (as seen above), but this isn't a processing intensive program.
 
 map_territory* match_map(terri to_search){
     for (auto& it: map_conglomerate){if (it->value==to_search){return it;}}

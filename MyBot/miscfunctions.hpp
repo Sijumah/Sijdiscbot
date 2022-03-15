@@ -6,8 +6,6 @@
 #include <thread>
 #include <iostream>
 
-#include  "Sijf.hpp"
-
 //export module miscfunctions;
 
 
@@ -17,7 +15,7 @@ void delete_and_swap_from_vectors(std::vector<T*>& deleter, std::vector<T*>& rec
     //delete from old one; this function seems redundant... will investigate
 };
 
-
+#ifdef yes
 #define prompt_console_instead_of_discord
 std::string prompt (const std::string& supprompt)
 #ifdef prompt_console_instead_of_discord
@@ -26,3 +24,6 @@ std::string prompt (const std::string& supprompt)
 #else
 std::string prompt_discord(const std::string& supprompt) {};//todo. Later on, use #define prompt prompt_console_temp and then change it to prompt_discord
 #endif
+
+
+#endif //endif ifdef yes

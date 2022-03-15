@@ -1,35 +1,32 @@
-/*module;
-
-#include <deque>
-#include <string>
-
-
-export module dunedefs;
-
-
-export */
-
 #pragma once
 
 #include <deque>
 #include <string>
 #include <iostream>
+#include <tuple>
+#include <memory>
+#include <vector>
+#include <optional>
+#include <vector>
+#include <list>
+#include <memory>
+#include <array>
+#include "discord_profile_filesystem.hpp"
 
+#define cif ".png"
+#define yesz
 
-//chosen image format
-std::string cif = ".png";
+#ifdef yesa
+inline std::string cif = ".png";
 
-void clog(const std::string& message) { std::cout << message + "\n"; }
+static constexpr auto lglight = 1;
+static constexpr auto lgheavy = 2;
 
-constexpr auto lglight = 1;
-constexpr auto lgheavy = 2;
-
-constexpr auto loggingmode = 2;
-//std::string discord_bot_filepath ="F:\\Folder in Which Things are Storesd\\Hobbies, etc\\Coding\\discord_bot_files";
-#define hvylog(message) if constexpr (loggingmode==2){clog(message);}
-
+static constexpr auto loggingmode = 2;
+#endif
 
 namespace dunegame {
+
 
     
 enum terri {

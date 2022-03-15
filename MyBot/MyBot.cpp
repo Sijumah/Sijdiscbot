@@ -4,8 +4,7 @@
 #include <string>
 #include <fstream>
 
-#include "dunedefs.hpp"
-//#include "Sijf.hpp"
+
 
 //F:\Folder in Which Things are Storesd\Hobbies, etc\Coding\discord_bot_files\dunefiles
 std::string get_token() {
@@ -27,9 +26,20 @@ std::string Sbot_token = get_token();
 #define messagetestver 3
 #define menutestver 4
 #define manybuttonver 5
+#define blankver 6
+
+#define selector blankver//mainver
 
 
-#define selector mainver
+
+#if selector == blankver
+
+int main() {
+
+    return 0;
+};
+
+#endif
 
 
 

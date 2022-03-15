@@ -1,20 +1,4 @@
-/*
-module;
-
-#include <vector>
-#include <string>
-
-export module dune_decks;
-
-import dunedefs;
-import dunemap;
-
-export 
-*/
 #pragma once 
-#include <vector>
-#include <string>
-#include <iostream>
 
 #include "dunedefs.hpp"
 #include "dunemap.hpp"
@@ -32,7 +16,7 @@ struct card{
     virtual void play() {
         std::cout << "hi";
        
-        hvylog("structt card(base)'s play function called");
+        //hvylog("structt card(base)'s play function called");
 
        
 

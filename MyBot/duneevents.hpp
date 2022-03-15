@@ -1,16 +1,13 @@
 #pragma once
 
-
-#include <tuple>
-#include <string>
-#include <deque>
-
-#include "dunefactions.hpp"
 #include "dunedefs.hpp"
+#include "dunefactions.hpp"
+
 
 
 namespace dunegame {
 
+struct dune_event_handler{
 std::deque<std::pair<std::string,std::string>> event_flags;  //Ie "fremen have gone yet", "yes".
 
 
@@ -67,7 +64,7 @@ void for_this_phase_treachery_card_prompt(){};  //prompts the current (or maybe 
 
 
 
-
+};  //End of dune events handler.
 
 
 

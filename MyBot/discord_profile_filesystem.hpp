@@ -1,5 +1,7 @@
 ﻿#pragma once 
 
+#include "Sijf.hpp"
+
 #include <string.h>
 #include <string>
 #include <deque>
@@ -8,7 +10,7 @@
 #include<vector>
 #include <optional>
 
-#include "Sijf.hpp"
+
 
 
 
