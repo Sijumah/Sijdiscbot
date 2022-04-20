@@ -28,6 +28,9 @@
     <Filter Include="Source Files\DUNE\Decks">
       <UniqueIdentifier>{2a51cb0f-9900-4f8f-8105-6fd3c28a9895}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Codenames">
+      <UniqueIdentifier>{cb8e316c-8904-4ae5-963d-4cf0d97bf246}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MyBot.cpp">
